@@ -8,7 +8,7 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
-# include "libft.h"  // Assurez-vous que libft est incluse si utilisée
+# include "libft.h"  // A ajouter
 
 // Macros
 # define SUCCESS 0
