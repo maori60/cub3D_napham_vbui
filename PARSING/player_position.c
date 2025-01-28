@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_position.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 17:01:10 by vbui              #+#    #+#             */
+/*   Updated: 2025/01/28 17:08:47 by vbui             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 /**
@@ -25,7 +37,12 @@ static int find_player_position(char **map, t_player *player) {
  * Valide et initialise la position du joueur.
  */
 int validate_player_position(t_data *data) {
-    if (find_player_position(data->map, &data->player) == FAILURE)
-        return FAILURE;
+    if (!data || !data->mapinfo.map)
+        return display_error(NULL, "Error: Map data is missing.", FAILURE);
+
+    if (find_player_position(data->mapinfo.map, &data->player) == FAILURE)
+        return display_error(NULL, "Error: Invalid player position.", FAILURE);
+
     return SUCCESS;
 }
+

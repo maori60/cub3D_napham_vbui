@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 17:08:18 by vbui              #+#    #+#             */
+/*   Updated: 2025/01/28 17:13:54 by vbui             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -8,7 +20,7 @@
 # include <string.h>
 # include <errno.h>
 # include <math.h>
-# include "libft.h"  // A ajouter
+# include "../libft/libft.h"  // A ajouter
 
 // Macros
 # define SUCCESS 0
