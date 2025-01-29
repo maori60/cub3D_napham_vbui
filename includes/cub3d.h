@@ -6,7 +6,7 @@
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:08:18 by vbui              #+#    #+#             */
-/*   Updated: 2025/01/28 17:13:54 by vbui             ###   ########.fr       */
+/*   Updated: 2025/01/29 00:42:28 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,24 @@ int load_map_data(char **lines, t_data *data, int start);
 int validate_player_position(t_data *data);
 
 // Fonctionnalités liées au parsing des couleurs RGB (rgb_parser.c)
-int parse_rgb_colors(t_data *data, char *line, int is_floor);
+int parse_rgb_colors(t_texinfo *textures, char *line, int is_floor);
+
 
 // Outils génériques
 int display_error(char *context, char *message, int return_code);
+
+void free_data(t_data *data);
+
+// PARSING/file_loader.c
+int count_file_lines(char *filepath);
+int load_file_content(char **content, int fd);
+int parse_texture_line(char *line, t_data *data);
+int validate_map_borders(char **map, int height);
+int validate_map_characters(char **map, int height, int width);
+int validate_map_spaces(char **map, int height, int width);
+int validate_floor_and_ceiling(t_texinfo *textures);
+
+
+
 
 #endif

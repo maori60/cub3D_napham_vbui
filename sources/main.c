@@ -6,16 +6,12 @@
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:08:27 by vbui              #+#    #+#             */
-/*   Updated: 2025/01/28 17:27:35 by vbui             ###   ########.fr       */
+/*   Updated: 2025/01/29 00:26:36 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/cub3d.h"
 
-/**
- * Initialise les structures de données.
- */
 void init_data(t_data *data) {
     data->mapinfo.file = NULL;
     data->mapinfo.map = NULL;
@@ -36,9 +32,6 @@ void init_data(t_data *data) {
     data->player.dir = '\0';
 }
 
-/**
- * Libère toutes les ressources allouées.
- */
 void free_data(t_data *data) {
     if (data->mapinfo.file) {
         for (int i = 0; data->mapinfo.file[i]; i++)
@@ -52,6 +45,10 @@ void free_data(t_data *data) {
         free(data->mapinfo.map);
     }
 
+    free(data->texinfo.north);
+    free(data->texinfo.south);
+    free(data->texinfo.west);
+    free(data->texinfo.east);
     free(data->texinfo.floor);
     free(data->texinfo.ceiling);
 }

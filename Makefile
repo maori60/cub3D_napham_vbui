@@ -65,3 +65,7 @@ fclean: clean
 
 # Récompilation complète
 re: fclean all
+
+debug:
+	@echo $(OBJS)
+
