@@ -6,7 +6,7 @@
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:08:18 by vbui              #+#    #+#             */
-/*   Updated: 2025/01/30 00:19:17 by vbui             ###   ########.fr       */
+/*   Updated: 2025/01/30 00:42:20 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_texinfo {
     int             *ceiling;   // Tableau RGB pour le plafond
     unsigned long   hex_floor;
     unsigned long   hex_ceiling;
-    int             floor_color;     // Ajoute ceci si manquant
+    int             floor_color;
     int             ceiling_color;  
 } t_texinfo;
 
