@@ -6,7 +6,7 @@
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 22:12:44 by vbui              #+#    #+#             */
-/*   Updated: 2025/01/28 16:23:18 by vbui             ###   ########.fr       */
+/*   Updated: 2025/01/29 23:41:59 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int				ft_tolower(int c);
 int				ft_toupper(int c);
 void			*ft_calloc(size_t count, size_t size);
 char			*ft_strdup(const char *s1);
+int ft_isspace(char c);
 
 /*fonctions additionnelles*/
 char			*ft_substr(char const *s, unsigned int start, size_t len);

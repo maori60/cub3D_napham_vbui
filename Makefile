@@ -29,6 +29,7 @@ PARSING_FILES = args_checker.c \
 				player_position.c
 
 SRC_FILES = main.c \
+            map_utils.c \
 			utils.c
 
 SRCS = $(addprefix $(PARSING_PATH), $(PARSING_FILES)) \
