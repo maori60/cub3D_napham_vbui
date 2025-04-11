@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   init_texinfo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 22:08:28 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/10 02:17:23 by vbui             ###   ########.fr       */
+/*   Created: 2025/04/12 08:10:00 by vbui              #+#    #+#             */
+/*   Updated: 2025/04/12 01:03:55 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/cub3d.h"
 
-char	*ft_strchr(const char *s, int c)
+void	init_texinfo(t_texinfo *t)
 {
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (c == '\0')
-		return ((char *)s);
-	return (NULL);
+	t->north = NULL;
+	t->south = NULL;
+	t->west = NULL;
+	t->east = NULL;
+	t->floor = NULL;
+	t->ceiling = NULL;
+	t->hex_floor = 0x0;
+	t->hex_ceiling = 0x0;
 }

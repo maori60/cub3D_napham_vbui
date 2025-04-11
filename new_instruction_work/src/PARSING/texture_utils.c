@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_position.c                                  :+:      :+:    :+:   */
+/*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 17:01:10 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 00:41:49 by vbui             ###   ########.fr       */
+/*   Created: 2025/04/12 00:38:29 by vbui              #+#    #+#             */
+/*   Updated: 2025/04/12 00:38:50 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
-int	validate_player_position(t_data *data)
+char	*trim_texture_path(char *line)
 {
-	if (!data || !data->mapinfo.map)
+	char	*trimmed;
+
+	trimmed = ft_strtrim(line, " \t\n");
+	if (!trimmed)
+		display_error_message(NULL, ERR_MALLOC, FAILURE);
+	return (trimmed);
+}
+
+int	store_texture(char **texture, char *path)
+{
+	if (*texture != NULL)
+	{
+		free(path);
 		return (display_error_message(NULL,
-				"Error: Map data is missing.", FAILURE));
-	if (find_player_position(data->mapinfo.map,
-			&data->player, data->mapinfo.height) == FAILURE)
-		return (FAILURE);
+				"Error: Duplicate texture definition.",
+				FAILURE));
+	}
+	*texture = path;
 	return (SUCCESS);
 }

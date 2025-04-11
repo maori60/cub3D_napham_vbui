@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   file_parser.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 22:08:28 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/10 02:17:23 by vbui             ###   ########.fr       */
+/*   Created: 2025/04/12 00:53:10 by vbui              #+#    #+#             */
+/*   Updated: 2025/04/12 00:56:29 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FILE_PARSER_H
+# define FILE_PARSER_H
 
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (c == '\0')
-		return ((char *)s);
-	return (NULL);
-}
+# include "../includes/cub3d.h"
+
+int	trim_file_lines(char **lines);
+int	parse_all_lines(char **file, t_data *data);
+int	parse_and_validate_map(t_data *data, int map_start);
+
+#endif

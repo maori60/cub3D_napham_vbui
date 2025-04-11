@@ -8,9 +8,9 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g3
 
 # Répertoires
-PARSING_PATH	= ./PARSING/
-SRC_PATH		= ./sources/
-INIT_PATH		= ./init/
+PARSING_PATH	= ./src/PARSING/
+SRC_PATH		= ./src/sources/
+INIT_PATH		= ./src/init/
 INC_PATH		= ./includes/
 OBJ_PATH		= ./objects/
 
@@ -33,13 +33,24 @@ PARSING_FILES = args_checker.c \
 				map_boundaries.c \
 				map_loader.c \
 				rgb_parser.c \
+				map_validator_utils.c \
+				rgb_utils.c \
+				parse_texture_line.c \
+				texture_utils.c  \
+				find_player_position.c \
+				file_parser.c \
+				load_map_file.c \
+				player_utils.c \
 				player_position.c
 
 SRC_FILES = main.c \
             map_utils.c \
-			utils.c
+			error_utils.c \
+			free_utils.c \
+			rgb_utils.c 
 
 INIT_FILES = init_mlx.c \
+			 init_texinfo.c \
              init_textures.c
 
 # Générer les chemins complets des fichiers source
@@ -85,5 +96,6 @@ fclean: clean
 # Récompilation complète
 re: fclean all
 
+# Pour debug les chemins d'objets
 debug:
 	@echo $(OBJS)

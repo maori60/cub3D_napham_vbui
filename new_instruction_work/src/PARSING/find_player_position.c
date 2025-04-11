@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   find_player_position.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 01:09:29 by vbui             ###   ########.fr       */
+/*   Created: 2025/04/12 05:18:00 by vbui              #+#    #+#             */
+/*   Updated: 2025/04/12 01:01:08 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include "../includes/player_utils.h"
 
-/**
- * Find the index of the first map line (starting with '1').
- */
-int	find_map_start(char **file)
+int	find_player_position(char **map, t_player *player, int height)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (file[i])
+	while (i < height)
 	{
-		if (ft_strlen(file[i]) == 0 || ft_isspace(file[i][0]))
+		j = 0;
+		while (map[i][j])
 		{
-			i++;
-			continue ;
+			if (ft_strchr("NSEW", map[i][j]))
+			{
+				if (multiple_players(player))
+					return (display_error_message(NULL,
+							"Error: Multiple player positions.", FAILURE));
+				if (handle_player(map, i, j, player) == FAILURE)
+					return (FAILURE);
+			}
+			j++;
 		}
-		if (file[i][0] == 'F' || file[i][0] == 'C')
-		{
-			i++;
-			continue ;
-		}
-		if (ft_strchr(file[i], '1'))
-			return (i);
 		i++;
 	}
-	return (-1);
+	return (player_not_found(player));
 }

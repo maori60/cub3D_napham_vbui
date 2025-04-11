@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   player_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 22:08:28 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/10 02:17:23 by vbui             ###   ########.fr       */
+/*   Created: 2025/04/12 07:10:00 by vbui              #+#    #+#             */
+/*   Updated: 2025/04/12 01:01:08 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PLAYER_UTILS_H
+# define PLAYER_UTILS_H
 
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (c == '\0')
-		return ((char *)s);
-	return (NULL);
-}
+# include "cub3d.h"
+
+int	is_invalid_position(char c);
+int	check_player_surroundings(char **map, int x, int y);
+int	multiple_players(t_player *player);
+int	player_not_found(t_player *player);
+int	handle_player(char **map, int i, int j, t_player *player);
+
+#endif

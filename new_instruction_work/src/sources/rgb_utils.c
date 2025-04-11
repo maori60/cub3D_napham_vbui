@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   rgb_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 22:08:28 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/10 02:17:23 by vbui             ###   ########.fr       */
+/*   Created: 2025/04/12 01:16:58 by vbui              #+#    #+#             */
+/*   Updated: 2025/04/12 01:16:59 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/cub3d.h"
 
-char	*ft_strchr(const char *s, int c)
+unsigned int	rgb_to_hex(int r, int g, int b)
 {
-	if (!s)
-		return (NULL);
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (c == '\0')
-		return ((char *)s);
-	return (NULL);
+	return ((r << 16) | (g << 8) | b);
 }
