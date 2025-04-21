@@ -8,7 +8,7 @@ CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror -g3
 
 # Répertoires
-PARSING_PATH	= ./src/PARSING/
+PARSING_PATH	= ./src/parsing/
 SRC_PATH		= ./src/sources/
 INIT_PATH		= ./src/init/
 INC_PATH		= ./includes/
