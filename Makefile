@@ -19,12 +19,6 @@ LIBFT_PATH	= ./libft/
 LIBFT_NAME	= libft.a
 LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
-# MiniLibX
-MLX_LIB_PATH	= ./minilibx-linux/
-MLX_NAME	= libmlx.a
-MLX			= $(MLX_LIB_PATH)$(MLX_NAME)
-MLX_FLAGS	= -L$(MLX_LIB_PATH) -lmlx -lm -lX11 -lXext -lbsd
-
 # Fichiers sources
 PARSING_FILES = args_checker.c \
 				file_loader.c \
@@ -62,20 +56,17 @@ SRCS = $(addprefix $(PARSING_PATH), $(PARSING_FILES)) \
 OBJS = $(SRCS:%.c=$(OBJ_PATH)%.o)
 
 # Commande principale
-all: $(MLX) $(LIBFT) $(NAME)
+all: $(LIBFT) $(NAME)
 
 # Compilation du programme principal
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -I $(INC_PATH) -I $(LIBFT_PATH) -I $(INIT_PATH) -I $(MLX_LIB_PATH) $(LIBFT) $(MLX_FLAGS)
+$(NAME): minilibx-linux/libmlx.a $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) minilibx-linux/libmlx.a $(LIBFT) -o $(NAME) -I $(INC_PATH) -I $(LIBFT_PATH) -I $(INIT_PATH) 
 
 # Création des fichiers objets
 $(OBJ_PATH)%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIBFT_PATH) -I $(INIT_PATH) -I $(MLX_LIB_PATH)
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIBFT_PATH) -I $(INIT_PATH)
 
-# Compilation de MiniLibX
-$(MLX):
-	make -C $(MLX_LIB_PATH)
 
 # Compilation de la libft
 $(LIBFT):
@@ -83,15 +74,13 @@ $(LIBFT):
 
 # Nettoyage des fichiers objets
 clean:
-	rm -rf $(OBJ_PATH)
+	rm -rf $(OBJ_PATH) minilibx-linux
 	make -C $(LIBFT_PATH) clean
-	make -C $(MLX_LIB_PATH) clean
 
 # Nettoyage complet
 fclean: clean
 	rm -f $(NAME)
 	make -C $(LIBFT_PATH) fclean
-	make -C $(MLX_LIB_PATH) clean
 
 # Récompilation complète
 re: fclean all
@@ -99,3 +88,9 @@ re: fclean all
 # Pour debug les chemins d'objets
 debug:
 	@echo $(OBJS)
+
+minilibx-linux/libmlx.a:
+	rm -rf minilibx-linux && \
+	curl -OL https://cdn.intra.42.fr/document/document/31613/minilibx-linux.tgz && \
+	tar xf minilibx-linux.tgz && rm -rf minilibx-linux.tgz && \
+	make -C minilibx-linux
