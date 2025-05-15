@@ -4,18 +4,18 @@
 NAME	= cub3D
 
 # Compilateur et options
-CC		= gcc
+CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g3
 
 # Répertoires
-PARSING_PATH	= ./src/parsing/
-SRC_PATH		= ./src/sources/
-INIT_PATH		= ./src/init/
-INC_PATH		= ./includes/
-OBJ_PATH		= ./objects/
+PARSING_PATH	= src/parsing/
+SRC_PATH		= src/
+INIT_PATH		= src/init/
+INC_PATH		= includes/
+OBJ_PATH		= objects/
 
 # Libft
-LIBFT_PATH	= ./libft/
+LIBFT_PATH	= libft/
 LIBFT_NAME	= libft.a
 LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
@@ -56,16 +56,16 @@ SRCS = $(addprefix $(PARSING_PATH), $(PARSING_FILES)) \
 OBJS = $(SRCS:%.c=$(OBJ_PATH)%.o)
 
 # Commande principale
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
 # Compilation du programme principal
-$(NAME): minilibx-linux/libmlx.a $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) minilibx-linux/libmlx.a $(LIBFT) -o $(NAME) -I $(INC_PATH) -I $(LIBFT_PATH) -I $(INIT_PATH) 
+$(NAME): minilibx-linux/libmlx.a $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) minilibx-linux/libmlx.a $(LIBFT) -lX11 -lXext -o $(NAME)
 
 # Création des fichiers objets
 $(OBJ_PATH)%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIBFT_PATH) -I $(INIT_PATH)
+	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH) -I $(LIBFT_PATH)
 
 
 # Compilation de la libft
