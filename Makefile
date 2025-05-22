@@ -44,7 +44,8 @@ SRC_FILES = main.c \
 			rgb_utils.c \
 			keys.c \
 			raycasting.c \
-			render.c
+			render.c \
+			player.c
 
 INIT_FILES = init_mlx.c \
 			 init_texinfo.c \
@@ -63,7 +64,7 @@ all: $(NAME)
 
 # Compilation du programme principal
 $(NAME): minilibx-linux/libmlx.a $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) minilibx-linux/libmlx.a $(LIBFT) -lX11 -lXext -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) minilibx-linux/libmlx.a $(LIBFT) -lX11 -lXext -lm -o $(NAME)
 
 # Création des fichiers objets
 $(OBJ_PATH)%.o: %.c

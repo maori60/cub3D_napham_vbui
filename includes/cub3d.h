@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/22 21:10:46 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/22 22:46:58 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,12 @@ typedef struct s_player
 	double			rot_speed;
 }					t_player;
 
-typedef struct s_mapinfo
+typedef struct s_map
 {
-	char			**file;
-	char			**map;
+	char			**grid;
 	int				width;
 	int				height;
-}					t_mapinfo;
+}					t_map;
 
 typedef struct s_ray
 {
@@ -172,7 +171,7 @@ typedef struct s_game
 	void			*mlx;
 	void			*win;
 	t_img			*img;
-	t_mapinfo		mapinfo;
+	t_map			map;
 	t_player		player;
 	t_textures		textures;
 	t_keys			keys;
@@ -233,4 +232,8 @@ int					store_texture(char **texture, char *path);
 int					key_press(int keycode, t_game *game);
 int					key_release(int keycode, t_game *game);
 int					render_frame(t_game *game);
+void				render_wall(t_game *game, t_ray *ray, int x);
+void				cast_rays(t_game *game);
+void				move_player(t_game *game);
+
 #endif

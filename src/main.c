@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/22 21:06:55 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/22 22:47:51 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,9 @@ int	main(int argc, char **argv)
 	init_mlx(&game);
 	if (load_map_file(argv[1], &game) == FAILURE)
 		clean_exit(&game, FAILURE);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
+	//mlx_hook(game.win, 17, 0, clean_exit, &game);
+	mlx_loop_hook(game.mlx, render_frame, &game);
 	mlx_loop(game.mlx);
 }
