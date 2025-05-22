@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   load_map_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 06:07:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 00:53:58 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/21 23:10:54 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include "../includes/file_parser.h"
 
-static int	open_and_store(char *filepath, t_data *data)
+static int	open_and_store(char *filepath, t_game *data)
 {
 	int	fd;
 	int	line_count;
@@ -36,7 +36,7 @@ static int	open_and_store(char *filepath, t_data *data)
 	return (SUCCESS);
 }
 
-int	load_map_file(char *filepath, t_data *data)
+int	load_map_file(char *filepath, t_game *data)
 {
 	int	map_start;
 

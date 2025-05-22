@@ -41,7 +41,10 @@ SRC_FILES = main.c \
             map_utils.c \
 			error_utils.c \
 			free_utils.c \
-			rgb_utils.c 
+			rgb_utils.c \
+			keys.c \
+			raycasting.c \
+			render.c
 
 INIT_FILES = init_mlx.c \
 			 init_texinfo.c \

@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 01:25:32 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/22 21:10:46 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <string.h>
-# include <errno.h>
-# include <math.h>
-# include <stddef.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
+# include <X11/Xlib.h>
+# include <X11/extensions/XShm.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <math.h>
+# include <stddef.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 /* Window and texture config */
-# define WIN_WIDTH 640
-# define WIN_HEIGHT 480
+# define SCREEN_WIDTH 640
+# define SCREEN_HEIGHT 480
 # define TEX_SIZE 64
 
 /* Error messages */
@@ -64,16 +66,23 @@ typedef enum e_texture_index
 	SOUTH,
 	EAST,
 	WEST
-}	t_texture_index;
+}					t_texture_index;
 
+// From minilibx
 typedef struct s_img
 {
-	void	*img;
-	int		*addr;
-	int		pixel_bits;
-	int		size_line;
-	int		endian;
-}	t_img;
+	XImage			*image;
+	Pixmap			pix;
+	GC				gc;
+	int				size_line;
+	int				bits_per_pixel;
+	int				width;
+	int				height;
+	int				type;
+	int				format;
+	char			*data;
+	XShmSegmentInfo	shm;
+}					t_img;
 
 typedef struct s_texinfo
 {
@@ -90,86 +99,138 @@ typedef struct s_texinfo
 	int				ceiling_color;
 	int				width;
 	int				height;
-}	t_texinfo;
+}					t_texinfo;
+
+typedef struct s_textures
+{
+	t_img			*north;
+	t_img			*south;
+	t_img			*west;
+	t_img			*east;
+	int				floor_color;
+	int				ceiling_color;
+}					t_textures;
 
 typedef struct s_player
 {
-	double	pos_x;
-	double	pos_y;
-	char	dir;
-}	t_player;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double			plane_y;
+	double			move_speed;
+	double			rot_speed;
+}					t_player;
 
 typedef struct s_mapinfo
 {
-	char	**file;
-	char	**map;
-	int		width;
-	int		height;
-}	t_mapinfo;
+	char			**file;
+	char			**map;
+	int				width;
+	int				height;
+}					t_mapinfo;
 
-typedef struct s_data
+typedef struct s_ray
 {
-	void		*mlx;
-	void		*win;
-	t_mapinfo	mapinfo;
-	t_texinfo	texinfo;
-	t_player	player;
-	void		**textures;
-}	t_data;
+	double			camera_x;
+	double			dir_x;
+	double			dir_y;
+	int				map_x;
+	int				map_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			perp_wall_dist;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	double			wall_x;
+	int				tex_x;
+	double			tex_pos;
+	double			tex_step;
+}					t_ray;
+
+typedef struct s_keys
+{
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				left;
+	int				right;
+	int				esc;
+}					t_keys;
+
+typedef struct s_game
+{
+	void			*mlx;
+	void			*win;
+	t_img			*img;
+	t_mapinfo		mapinfo;
+	t_player		player;
+	t_textures		textures;
+	t_keys			keys;
+}					t_game;
 
 /* Argument validation */
-int				validate_file_path(char *filename, int is_map_file);
+int					validate_file_path(char *filename, int is_map_file);
 
 /* File loading */
-int				load_map_file(char *filepath, t_data *data);
-int				count_file_lines(char *filepath);
-int				load_file_content(char **content, int fd);
+int					load_map_file(char *filepath, t_game *data);
+int					count_file_lines(char *filepath);
+int					load_file_content(char **content, int fd);
 
 /* Texture & color */
-int				validate_textures_and_colors(t_data *data,
-					t_texinfo *textures);
-int				parse_texture_line(char *line, t_data *data);
-int				parse_rgb_colors(t_texinfo *textures,
-					char *line, int is_floor);
-int				validate_floor_and_ceiling(t_texinfo *texinfo);
+int					validate_textures_and_colors(t_game *data,
+						t_texinfo *textures);
+int					parse_texture_line(char *line, t_game *data);
+int					parse_rgb_colors(t_texinfo *textures, char *line,
+						int is_floor);
+int					validate_floor_and_ceiling(t_texinfo *texinfo);
 
 /* Map validation */
-int				validate_map_borders(char **map, int height);
-int				validate_map_walls(char **map, int height);
-int				validate_map_characters(char **map,
-					int height, int width);
-int				validate_map_spaces(char **map,
-					int height, int width);
-int				check_wall(char **map, int i, int j, int height);
-int				is_space_adjacent(char **map, int i, int j);
-void			print_debug_map(char **map, int height);
+int					validate_map_borders(char **map, int height);
+int					validate_map_walls(char **map, int height);
+int					validate_map_characters(char **map, int height, int width);
+int					validate_map_spaces(char **map, int height, int width);
+int					check_wall(char **map, int i, int j, int height);
+int					is_space_adjacent(char **map, int i, int j);
+void				print_debug_map(char **map, int height);
 
 /* Player */
-int				validate_player_position(t_data *data);
-int				find_player_position(char **map, t_player *player, int height);
+int					validate_player_position(t_game *data);
+int					find_player_position(char **map, t_player *player,
+						int height);
 /* Map parsing */
-int				load_map_data(char **lines, t_data *data, int start);
-int				find_map_start(char **file);
+int					load_map_data(char **lines, t_game *data, int start);
+int					find_map_start(char **file);
 
 /* MLX init */
-void			init_mlx(t_data *data);
-void			init_img(t_data *data, t_img *image,
-					int width, int height);
-void			init_texture_img(t_data *data, t_img *image, char *path);
-void			init_textures(t_data *data);
-void			init_texinfo(t_texinfo *textures);
+void				init_mlx(t_game *data);
+void				init_texture_img(t_game *data, t_img *image, char *path);
+void				init_textures(t_game *data);
+void				init_texinfo(t_texinfo *textures);
 
 /* Utilities */
-unsigned int	rgb_to_hex(int r, int g, int b);
-int				display_error_message(char *ctx, char *msg, int code);
-int				err_msg(char *prefix, char *message, int exit_code);
-void			clean_exit(t_data *data, int exit_code);
-void			free_data(t_data *data);
+unsigned int		rgb_to_hex(int r, int g, int b);
+int					display_error_message(char *ctx, char *msg, int code);
+int					err_msg(char *prefix, char *message, int exit_code);
+void				clean_exit(t_game *data, int exit_code);
+void				free_data(t_game *data);
 
 /* RGB Utilities */
-int				*parse_rgb_values(char *line);
-void			free_split(char **split);
-char			*trim_texture_path(char *line);
-int				store_texture(char **texture, char *path);
+int					*parse_rgb_values(char *line);
+void				free_split(char **split);
+char				*trim_texture_path(char *line);
+int					store_texture(char **texture, char *path);
 
+int					key_press(int keycode, t_game *game);
+int					key_release(int keycode, t_game *game);
+int					render_frame(t_game *game);
 #endif

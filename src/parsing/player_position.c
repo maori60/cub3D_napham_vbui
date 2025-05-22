@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   player_position.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:01:10 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 00:41:49 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/21 23:10:54 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	validate_player_position(t_data *data)
+int	validate_player_position(t_game *data)
 {
 	if (!data || !data->mapinfo.map)
 		return (display_error_message(NULL,

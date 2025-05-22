@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:07:59 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 00:22:22 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/21 23:10:54 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	fill_map_line(char *src, char *dst, int width)
 /**
  * Loads the map into memory, trimming spaces and filling with walls.
  */
-int	load_map_data(char **lines, t_data *data, int start)
+int	load_map_data(char **lines, t_game *data, int start)
 {
 	int	i;
 
