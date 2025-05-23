@@ -14,11 +14,11 @@
 
 int	validate_player_position(t_game *data)
 {
-	if (!data || !data->mapinfo.map)
+	if (!data || !data->map.map)
 		return (display_error_message(NULL,
 				"Error: Map data is missing.", FAILURE));
-	if (find_player_position(data->mapinfo.map,
-			&data->player, data->mapinfo.height) == FAILURE)
+	if (find_player_position(data->map.map,
+			&data->player, data->map.height) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

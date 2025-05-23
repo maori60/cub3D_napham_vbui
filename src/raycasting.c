@@ -78,7 +78,7 @@ void	cast_single_ray(t_game *game, t_ray *ray, int x)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map.grid[ray->map_y][ray->map_x] == '1')
+		if (game->map.map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 	if (ray->side == 0)

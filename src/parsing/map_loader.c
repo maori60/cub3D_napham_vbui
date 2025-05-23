@@ -74,24 +74,24 @@ int	load_map_data(char **lines, t_game *data, int start)
 {
 	int	i;
 
-	data->mapinfo.height = count_map_lines(lines, start);
-	data->mapinfo.width = find_max_width(
-			lines, start, data->mapinfo.height);
-	data->mapinfo.map = malloc(
-			sizeof(char *) * (data->mapinfo.height + 1));
-	if (!data->mapinfo.map)
+	data->map.height = count_map_lines(lines, start);
+	data->map.width = find_max_width(
+			lines, start, data->map.height);
+	data->map.map = malloc(
+			sizeof(char *) * (data->map.height + 1));
+	if (!data->map.map)
 		return (display_error_message(NULL, ERR_MALLOC, FAILURE));
 	i = -1;
-	while (++i < data->mapinfo.height)
+	while (++i < data->map.height)
 	{
-		data->mapinfo.map[i] = ft_calloc(
-				data->mapinfo.width + 1, sizeof(char));
-		if (!data->mapinfo.map[i])
+		data->map.map[i] = ft_calloc(
+				data->map.width + 1, sizeof(char));
+		if (!data->map.map[i])
 			return (display_error_message(NULL,
 					"Error: Malloc failed for map row.", FAILURE));
 		fill_map_line(lines[start + i],
-			data->mapinfo.map[i], data->mapinfo.width);
+			data->map.map[i], data->map.width);
 	}
-	data->mapinfo.map[data->mapinfo.height] = NULL;
+	data->map.map[data->map.height] = NULL;
 	return (SUCCESS);
 }

@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-static void	free_mapinfo(t_mapinfo *m)
+static void	free_mapinfo(t_map *m)
 {
 	int	i;
 
@@ -38,5 +38,5 @@ void	free_data(t_game *data)
 {
 	if (!data)
 		return ;
-	free_mapinfo(&data->mapinfo);
+	free_mapinfo(&data->map);
 }

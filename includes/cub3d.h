@@ -125,7 +125,8 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	char			**grid;
+	char **file;
+	char			**map;
 	int				width;
 	int				height;
 }					t_map;

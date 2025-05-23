@@ -21,16 +21,16 @@ static int	open_and_store(char *filepath, t_game *data)
 	line_count = count_file_lines(filepath);
 	if (line_count == FAILURE)
 		return (FAILURE);
-	data->mapinfo.file = malloc(sizeof(char *) * (line_count + 1));
-	if (!data->mapinfo.file)
+	data->map.file = malloc(sizeof(char *) * (line_count + 1));
+	if (!data->map.file)
 		return (display_error_message(NULL, ERR_MALLOC, FAILURE));
 	fd = open(filepath, O_RDONLY);
 	if (fd < 0)
 	{
-		free(data->mapinfo.file);
+		free(data->map.file);
 		return (display_error_message(filepath, strerror(errno), FAILURE));
 	}
-	if (load_file_content(data->mapinfo.file, fd) == FAILURE)
+	if (load_file_content(data->map.file, fd) == FAILURE)
 		return (close(fd), FAILURE);
 	close(fd);
 	return (SUCCESS);
@@ -42,11 +42,11 @@ int	load_map_file(char *filepath, t_game *data)
 
 	if (open_and_store(filepath, data) == FAILURE)
 		return (FAILURE);
-	if (trim_file_lines(data->mapinfo.file) == FAILURE)
+	if (trim_file_lines(data->map.file) == FAILURE)
 		return (FAILURE);
-	if (parse_all_lines(data->mapinfo.file, data) == FAILURE)
+	if (parse_all_lines(data->map.file, data) == FAILURE)
 		return (FAILURE);
-	map_start = find_map_start(data->mapinfo.file);
+	map_start = find_map_start(data->map.file);
 	if (map_start == -1)
 		return (display_error_message(NULL, ERR_INVALID_MAP, FAILURE));
 	return (parse_and_validate_map(data, map_start));

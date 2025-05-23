@@ -49,19 +49,19 @@ int	parse_all_lines(char **file, t_game *data)
 
 int	parse_and_validate_map(t_game *data, int map_start)
 {
-	if (load_map_data(data->mapinfo.file, data, map_start) == FAILURE)
+	if (load_map_data(data->map.file, data, map_start) == FAILURE)
 		return (FAILURE);
-	if (validate_map_walls(data->mapinfo.map,
-			data->mapinfo.height) == FAILURE)
+	if (validate_map_walls(data->map.map,
+			data->map.height) == FAILURE)
 		return (FAILURE);
-	if (validate_map_borders(data->mapinfo.map,
-			data->mapinfo.height) == FAILURE)
+	if (validate_map_borders(data->map.map,
+			data->map.height) == FAILURE)
 		return (FAILURE);
-	if (validate_map_characters(data->mapinfo.map,
-			data->mapinfo.height, data->mapinfo.width) == FAILURE)
+	if (validate_map_characters(data->map.map,
+			data->map.height, data->map.width) == FAILURE)
 		return (FAILURE);
-	if (validate_map_spaces(data->mapinfo.map,
-			data->mapinfo.height, data->mapinfo.width) == FAILURE)
+	if (validate_map_spaces(data->map.map,
+			data->map.height, data->map.width) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

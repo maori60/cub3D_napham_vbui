@@ -25,7 +25,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y + game->player.dir_y
 			* game->player.move_speed;
-		if (game->map.grid[(int)new_y][(int)new_x] != '1')
+		if (game->map.map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
@@ -37,7 +37,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y - game->player.dir_y
 			* game->player.move_speed;
-		if (game->map.grid[(int)new_y][(int)new_x] != '1')
+		if (game->map.map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
@@ -49,7 +49,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y - game->player.plane_y
 			* game->player.move_speed;
-		if (game->map.grid[(int)new_y][(int)new_x] != '1')
+		if (game->map.map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
@@ -61,7 +61,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y + game->player.plane_y
 			* game->player.move_speed;
-		if (game->map.grid[(int)new_y][(int)new_x] != '1')
+		if (game->map.map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
