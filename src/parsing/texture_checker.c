@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:01:14 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 00:34:16 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/22 20:34:58 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	validate_texture_paths(t_texinfo *textures)
 	return (SUCCESS);
 }
 
-static int	validate_presence(t_data *data, t_texinfo *textures)
+static int	validate_presence(t_game *data, t_texinfo *textures)
 {
 	if (!textures->north || !textures->south
 		|| !textures->west || !textures->east)
@@ -54,7 +54,7 @@ static int	validate_presence(t_data *data, t_texinfo *textures)
 	return (SUCCESS);
 }
 
-int	validate_textures_and_colors(t_data *data, t_texinfo *textures)
+int	validate_textures_and_colors(t_game *data, t_texinfo *textures)
 {
 	if (!data || !textures)
 		return (display_error_message(NULL,
@@ -66,9 +66,5 @@ int	validate_textures_and_colors(t_data *data, t_texinfo *textures)
 		free_data(data);
 		return (FAILURE);
 	}
-	data->texinfo.hex_floor = rgb_to_hex(textures->floor[0],
-			textures->floor[1], textures->floor[2]);
-	data->texinfo.hex_ceiling = rgb_to_hex(textures->ceiling[0],
-			textures->ceiling[1], textures->ceiling[2]);
 	return (SUCCESS);
 }

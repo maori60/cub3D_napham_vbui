@@ -3,40 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 01:10:35 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/24 07:42:33 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+void	init_player(t_game *game)
+{
+	game->player.plane_x = game->player.dir_y * 0.66;
+	game->player.plane_y = -game->player.dir_x * 0.66;
+}
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*p;
+
+	p = b;
+	while (len--)
+		*p++ = (unsigned char)c;
+	return (b);
+}
+
 /**
  * Initializes program data.
  */
-void	init_data(t_data *data)
+void	init_game(t_game *game)
 {
-	data->mlx = NULL;
-	data->win = NULL;
-	data->mapinfo.file = NULL;
-	data->mapinfo.map = NULL;
-	data->mapinfo.width = 0;
-	data->mapinfo.height = 0;
-	data->texinfo.north = NULL;
-	data->texinfo.south = NULL;
-	data->texinfo.west = NULL;
-	data->texinfo.east = NULL;
-	data->texinfo.floor = NULL;
-	data->texinfo.ceiling = NULL;
-	data->texinfo.hex_floor = 0;
-	data->texinfo.hex_ceiling = 0;
+	ft_memset(game, 0, sizeof(t_game));
+	game->player.move_speed = 0.005;
+	game->player.rot_speed = 0.003;
 }
 
 /**
  * Frees MLX and texture resources before exiting.
  */
-void	clean_exit(t_data *data, int exit_code)
+void	clean_exit(t_game *data, int exit_code)
 {
 	if (data->win)
 		mlx_destroy_window(data->mlx, data->win);
@@ -54,17 +59,19 @@ void	clean_exit(t_data *data, int exit_code)
  */
 int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_game	game;
 
-	init_data(&data);
 	if (argc != 2)
 		return (display_error_message(NULL, ERR_USAGE, FAILURE));
-	if (load_map_file(argv[1], &data) == FAILURE)
-		clean_exit(&data, FAILURE);
-	if (validate_textures_and_colors(&data, &data.texinfo) == FAILURE)
-		clean_exit(&data, FAILURE);
-	init_mlx(&data);
-	init_textures(&data);
-	mlx_loop(data.mlx);
-	clean_exit(&data, SUCCESS);
+	init_game(&game);
+	init_mlx(&game);
+	if (load_map_file(argv[1], &game) == FAILURE)
+		clean_exit(&game, FAILURE);
+	validate_player_position(&game);
+	init_player(&game);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
+	//mlx_hook(game.win, 17, 0, clean_exit, &game);
+	mlx_loop_hook(game.mlx, render_frame, &game);
+	mlx_loop(game.mlx);
 }

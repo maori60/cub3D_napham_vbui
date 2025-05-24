@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 17:07:59 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 00:22:22 by vbui             ###   ########.fr       */
+/*   Updated: 2025/05/21 23:10:54 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,28 @@ static int	fill_map_line(char *src, char *dst, int width)
 /**
  * Loads the map into memory, trimming spaces and filling with walls.
  */
-int	load_map_data(char **lines, t_data *data, int start)
+int	load_map_data(char **lines, t_game *data, int start)
 {
 	int	i;
 
-	data->mapinfo.height = count_map_lines(lines, start);
-	data->mapinfo.width = find_max_width(
-			lines, start, data->mapinfo.height);
-	data->mapinfo.map = malloc(
-			sizeof(char *) * (data->mapinfo.height + 1));
-	if (!data->mapinfo.map)
+	data->map.height = count_map_lines(lines, start);
+	data->map.width = find_max_width(
+			lines, start, data->map.height);
+	data->map.map = malloc(
+			sizeof(char *) * (data->map.height + 1));
+	if (!data->map.map)
 		return (display_error_message(NULL, ERR_MALLOC, FAILURE));
 	i = -1;
-	while (++i < data->mapinfo.height)
+	while (++i < data->map.height)
 	{
-		data->mapinfo.map[i] = ft_calloc(
-				data->mapinfo.width + 1, sizeof(char));
-		if (!data->mapinfo.map[i])
+		data->map.map[i] = ft_calloc(
+				data->map.width + 1, sizeof(char));
+		if (!data->map.map[i])
 			return (display_error_message(NULL,
 					"Error: Malloc failed for map row.", FAILURE));
 		fill_map_line(lines[start + i],
-			data->mapinfo.map[i], data->mapinfo.width);
+			data->map.map[i], data->map.width);
 	}
-	data->mapinfo.map[data->mapinfo.height] = NULL;
+	data->map.map[data->map.height] = NULL;
 	return (SUCCESS);
 }
