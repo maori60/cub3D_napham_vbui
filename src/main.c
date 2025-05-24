@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/22 22:47:51 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/24 07:42:33 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	*ft_memset(void *b, int c, size_t len)
 void	init_game(t_game *game)
 {
 	ft_memset(game, 0, sizeof(t_game));
-	game->player.move_speed = 0.05;
-	game->player.rot_speed = 0.03;
+	game->player.move_speed = 0.005;
+	game->player.rot_speed = 0.003;
 }
 
 /**
@@ -67,6 +67,8 @@ int	main(int argc, char **argv)
 	init_mlx(&game);
 	if (load_map_file(argv[1], &game) == FAILURE)
 		clean_exit(&game, FAILURE);
+	validate_player_position(&game);
+	init_player(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
 	//mlx_hook(game.win, 17, 0, clean_exit, &game);
