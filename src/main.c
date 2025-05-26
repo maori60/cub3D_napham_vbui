@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/24 07:42:33 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/26 18:49:16 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ void	clean_exit(t_game *data, int exit_code)
 	exit(exit_code);
 }
 
+int	exit_game(t_game *game)
+{
+	free_data(game);
+	exit(0);
+	return (0);
+}
+
 /**
  * Program entry point.
  */
@@ -71,7 +78,7 @@ int	main(int argc, char **argv)
 	init_player(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
-	//mlx_hook(game.win, 17, 0, clean_exit, &game);
+	mlx_hook(game.win, 17, 0, exit_game, &game);
 	mlx_loop_hook(game.mlx, render_frame, &game);
 	mlx_loop(game.mlx);
 }

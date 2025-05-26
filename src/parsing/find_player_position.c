@@ -6,12 +6,11 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 05:18:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/22 21:00:43 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/26 18:48:53 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include "../includes/player_utils.h"
 
 int	find_player_position(char **map, t_player *player, int height)
 {

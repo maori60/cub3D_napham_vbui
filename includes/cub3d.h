@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/22 22:46:58 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/26 20:13:23 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,13 @@ typedef struct s_player
 
 typedef struct s_map
 {
-	char **file;
+	char			*no_path;
+	char			*so_path;
+	char			*ea_path;
+	char			*we_path;
+	int				floor_color;
+	int				ceiling_color;
+	char			**file;
 	char			**map;
 	int				width;
 	int				height;
@@ -236,5 +242,16 @@ int					render_frame(t_game *game);
 void				render_wall(t_game *game, t_ray *ray, int x);
 void				cast_rays(t_game *game);
 void				move_player(t_game *game);
+
+int					is_invalid_position(char c);
+int					check_player_surroundings(char **map, int x, int y);
+int					multiple_players(t_player *player);
+int					player_not_found(t_player *player);
+int					handle_player(char **map, int i, int j, t_player *player);
+
+int					trim_file_lines(char **lines);
+int					parse_all_lines(char **file, t_game *data);
+int					parse_and_validate_map(t_game *data, int map_start);
+int					exit_game(t_game *game);
 
 #endif

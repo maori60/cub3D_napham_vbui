@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:43:25 by napham            #+#    #+#             */
-/*   Updated: 2025/05/24 10:03:48 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/26 18:46:45 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	move_player(t_game *game)
 {
-	double  new_x;
-	double  new_y;
-	double  old_dir_x;
-	double  old_plane_x;
+	double	new_x;
+	double	new_y;
+	double	old_dir_x;
+	double	old_plane_x;
 
 	if (game->keys.w)
 	{
@@ -95,8 +95,6 @@ void	move_player(t_game *game)
 		game->player.plane_y = old_plane_x * sin(game->player.rot_speed)
 			+ game->player.plane_y * cos(game->player.rot_speed);
 	}
-	/*
-		if (game->keys.esc)
+	if (game->keys.esc)
 		exit_game(game);
-	*/
 }
