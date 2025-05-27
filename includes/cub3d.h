@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/26 20:13:23 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/27 23:00:46 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,5 +253,30 @@ int					trim_file_lines(char **lines);
 int					parse_all_lines(char **file, t_game *data);
 int					parse_and_validate_map(t_game *data, int map_start);
 int					exit_game(t_game *game);
+
+int					is_map_char(char c);
+int					open_file(char *path);
+int					skip_whitespace(char *line);
+int					is_empty_line(char *line);
+int					check_map_start(char *line, t_map *map, int line_count);
+char				*extract_path(char *line, int start);
+int					parse_texture(char *line, char **texture_path, int offset);
+int					parse_no_texture(char *line, t_map *map);
+int					parse_so_texture(char *line, t_map *map);
+int					parse_ea_texture(char *line, t_map *map);
+int					parse_we_texture(char *line, t_map *map);
+int					parse_floor_color(char *line, t_map *map);
+int					parse_ceiling_color(char *line, t_map *map);
+int					parse_config_line(char *line, t_map *map);
+int					validate_config(t_map *map, int map_start);
+int					skip_to_map(int fd, int map_start);
+char				*copy_map_line(char *line);
+int					read_map_content(int fd, t_map *map);
+int					parse_config(int fd, t_map *map, int *map_start);
+int					allocate_map(t_map *map);
+int					load_map(char *path, t_map *map);
+int					parse_number(char *str, int *index, int *value);
+int					parse_rgb_component(char *str, int *index, int *component);
+int					parse_color(char *str);
 
 #endif

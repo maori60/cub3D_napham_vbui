@@ -3,38 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/04/12 01:09:29 by vbui             ###   ########.fr       */
+/*   Created: 2025/05/27 23:09:07 by napham            #+#    #+#             */
+/*   Updated: 2025/05/27 23:09:10 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-/**
- * Find the index of the first map line (starting with '1').
- */
-int	find_map_start(char **file)
+int	is_map_char(char c)
+{
+	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
+		|| c == ' ');
+}
+
+static int	open_file(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (-1);
+	return (fd);
+}
+
+static int	skip_whitespace(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (file[i])
-	{
-		if (ft_strlen(file[i]) == 0 || ft_isspace(file[i][0]))
-		{
-			i++;
-			continue ;
-		}
-		if (file[i][0] == 'F' || file[i][0] == 'C')
-		{
-			i++;
-			continue ;
-		}
-		if (ft_strchr(file[i], '1'))
-			return (i);
+	while (line[i] && ft_isspace(line[i]))
 		i++;
-	}
-	return (-1);
+	return (i);
+}
+
+static int	is_empty_line(char *line)
+{
+	int	i;
+
+	i = skip_whitespace(line);
+	return (!line[i] || line[i] == '\n');
 }

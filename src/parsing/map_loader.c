@@ -5,93 +5,107 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 17:07:59 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/21 23:10:54 by napham           ###   ########.fr       */
+/*   Created: 2025/05/27 23:15:26 by napham            #+#    #+#             */
+/*   Updated: 2025/05/27 23:57:39 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-/**
- * Finds the widest line in the map.
- */
-int	find_max_width(char **lines, int start, int height)
+static int	validate_config(t_map *map, int map_start)
 {
-	int	max_width;
-	int	len;
-	int	i;
+	if (!map->no_path || !map->so_path || !map->ea_path || !map->we_path
+		|| map_start == 0)
+		return (-1);
+	return (0);
+}
 
-	max_width = 0;
-	i = start;
-	while (i < start + height)
+static int	skip_to_map(int fd, int map_start)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	while (i < map_start)
 	{
-		len = ft_strlen(lines[i]);
-		if (len > max_width)
-			max_width = len;
+		line = get_next_line(fd);
+		if (!line)
+			return (-1);
+		free(line);
 		i++;
 	}
-	return (max_width);
+	return (0);
 }
 
-/**
- * Counts the number of map lines from start.
- */
-int	count_map_lines(char **lines, int start)
+static char	*copy_map_line(char *line)
 {
-	int	count;
-
-	count = 0;
-	while (lines[start] && ft_strchr(lines[start], '1'))
-	{
-		count++;
-		start++;
-	}
-	return (count);
-}
-
-static int	fill_map_line(char *src, char *dst, int width)
-{
-	int	j;
-	int	k;
+	char	*map_line;
+	int		j;
 
 	j = 0;
-	k = 0;
-	while (src[j])
+	while (line[j] && line[j] != '\n')
+		j++;
+	map_line = malloc(j + 1);
+	if (!map_line)
+		return (NULL);
+	j = 0;
+	while (line[j] && line[j] != '\n')
 	{
-		if (src[j] != ' ')
-			dst[k++] = src[j];
+		map_line[j] = line[j];
 		j++;
 	}
-	while (k < width)
-		dst[k++] = '1';
-	return (SUCCESS);
+	map_line[j] = '\0';
+	return (map_line);
 }
 
-/**
- * Loads the map into memory, trimming spaces and filling with walls.
- */
-int	load_map_data(char **lines, t_game *data, int start)
+static int	read_map_content(int fd, t_map *map)
 {
-	int	i;
+	char	*line;
+	int		i;
 
-	data->map.height = count_map_lines(lines, start);
-	data->map.width = find_max_width(
-			lines, start, data->map.height);
-	data->map.map = malloc(
-			sizeof(char *) * (data->map.height + 1));
-	if (!data->map.map)
-		return (display_error_message(NULL, ERR_MALLOC, FAILURE));
-	i = -1;
-	while (++i < data->map.height)
+	i = 0;
+	while (i < map->height)
 	{
-		data->map.map[i] = ft_calloc(
-				data->map.width + 1, sizeof(char));
-		if (!data->map.map[i])
-			return (display_error_message(NULL,
-					"Error: Malloc failed for map row.", FAILURE));
-		fill_map_line(lines[start + i],
-			data->map.map[i], data->map.width);
+		line = get_next_line(fd);
+		if (!line)
+			return (-1);
+		map->map[i] = copy_map_line(line);
+		if (!map->map[i])
+		{
+			free(line);
+			return (-1);
+		}
+		if (map->width < ft_strlen(map->map[i]))
+			map->width = ft_strlen(map->map[i]);
+		free(line);
+		i++;
 	}
-	data->map.map[data->map.height] = NULL;
-	return (SUCCESS);
+	map->map[i] = NULL;
+	return (0);
+}
+
+static int	parse_config(int fd, t_map *map, int *map_start)
+{
+	char	*line;
+	int		line_count;
+
+	line_count = 0;
+	*map_start = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (!is_empty_line(line))
+		{
+			if (process_non_empty_line(line, map, map_start, line_count) == -1)
+			{
+				free(line);
+				return (-1);
+			}
+		}
+		free(line);
+		line_count++;
+	}
+	return (line_count);
 }
