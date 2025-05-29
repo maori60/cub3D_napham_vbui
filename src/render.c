@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:16:53 by napham            #+#    #+#             */
-/*   Updated: 2025/05/22 22:48:51 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/29 20:36:22 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void	clear_image(t_img *img);
 void	put_pixel(t_img *img, int x, int y, int color);
 int		get_pixel_color(t_img *img, int x, int y);
+void	cast_rays(t_game *game);
+void	move_player(t_game *game);
 
 int	render_frame(t_game *game)
 {

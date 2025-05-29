@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 22:43:25 by napham            #+#    #+#             */
-/*   Updated: 2025/05/26 18:46:45 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/29 19:38:14 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y + game->player.dir_y
 			* game->player.move_speed;
-		if (game->map.map[(int)new_y][(int)new_x] != '1')
+		if (game->map->map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
@@ -37,7 +37,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y - game->player.dir_y
 			* game->player.move_speed;
-		if (game->map.map[(int)new_y][(int)new_x] != '1')
+		if (game->map->map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
@@ -49,7 +49,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y - game->player.plane_y
 			* game->player.move_speed;
-		if (game->map.map[(int)new_y][(int)new_x] != '1')
+		if (game->map->map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;
@@ -61,7 +61,7 @@ void	move_player(t_game *game)
 			* game->player.move_speed;
 		new_y = game->player.pos_y + game->player.plane_y
 			* game->player.move_speed;
-		if (game->map.map[(int)new_y][(int)new_x] != '1')
+		if (game->map->map[(int)new_y][(int)new_x] != '1')
 		{
 			game->player.pos_x = new_x;
 			game->player.pos_y = new_y;

@@ -3,10 +3,9 @@
 NAME	= cub3D
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g3
+CFLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRC_PATH		= src/
-INC_PATH		= includes/
 OBJ_PATH		= objects/
 
 SRCS = main.c \
@@ -15,20 +14,22 @@ SRCS = main.c \
 		keys.c \
 		raycasting.c \
 		render.c \
-		player.c
+		player.c \
+		map/border_checking.c  map/cell_validation.c  map/element_utils.c \
+		map/file_utils.c  map/map_loading.c  map/map_processing.c  map/map_utils.c  map/string_utils.c
 
 OBJS = $(addprefix $(OBJ_PATH), $(SRCS:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): minilibx-linux/libmlx.a  $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) minilibx-linux/libmlx.a $(LIBFT) -lX11 -lXext -lm -o $(NAME)
 
 $(OBJ_PATH):
-	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(OBJ_PATH)/map
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
-	$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_PATH)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 
 clean:

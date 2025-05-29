@@ -6,13 +6,14 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 20:12:28 by napham            #+#    #+#             */
-/*   Updated: 2025/05/22 22:35:36 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/29 20:34:47 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 void	cast_single_ray(t_game *game, t_ray *ray, int x);
+void	render_wall(t_game *game, t_ray *ray, int x);
 
 void	cast_rays(t_game *game)
 {
@@ -78,7 +79,7 @@ void	cast_single_ray(t_game *game, t_ray *ray, int x)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->map.map[ray->map_y][ray->map_x] == '1')
+		if (game->map->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
 	if (ray->side == 0)

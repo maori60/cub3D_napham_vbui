@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolower.c                                       :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 22:12:28 by vbui              #+#    #+#             */
-/*   Updated: 2023/11/26 22:12:29 by vbui             ###   ########.fr       */
+/*   Created: 2025/05/29 19:30:48 by napham            #+#    #+#             */
+/*   Updated: 2025/05/29 19:30:52 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "map.h"
 
-int	ft_tolower(int c)
+void	free_map(t_map *m)
 {
-	if (c >= 'A' && 'Z' >= c)
-		return (c + 'a' - 'A');
-	return (c);
+	int	i;
+
+	i = 0;
+	while (m->map && i < m->height)
+		free(m->map[i++]);
+	free(m->map);
+	free(m->no_path);
+	free(m->so_path);
+	free(m->ea_path);
+	free(m->we_path);
 }
