@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:29:57 by napham            #+#    #+#             */
-/*   Updated: 2025/05/29 19:40:44 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/31 00:23:40 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,14 @@ t_map	*load_map(char *path)
 	if (!m)
 		return (NULL);
 	m->height = get_map_height(path, m);
-	if (m->height == -1)
-	{
-		free_map(m);
-		free(m);
-		return (NULL);
-	}
+	if (m->element_count < 6)
+		return (err_msg(NULL, ERR_MAP_MISSING_ELEMENTS), free_map(m), free(m),
+			NULL);
+	if (m->height < 3)
+		return (err_msg(NULL, ERR_MAP_SMALL), free_map(m), free(m), NULL);
 	if (!allocate_map(m))
-	{
-		free_map(m);
-		free(m);
-		return (NULL);
-	}
+		return (err_msg(NULL, ERR_MAP_MEMORY), free_map(m), free(m), NULL);
 	if (!load_and_validate(m, path))
-	{
-		free_map(m);
-		free(m);
-		return (NULL);
-	}
+		return (free_map(m), free(m), NULL);
 	return (m);
 }

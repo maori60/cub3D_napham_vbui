@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:30:30 by napham            #+#    #+#             */
-/*   Updated: 2025/05/29 19:30:35 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/31 00:16:12 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,29 @@ int	store_map_line(t_map *m, char *line, int i)
 	return (1);
 }
 
-int	process_map_line(t_map *m, char *line, int *i)
-{
-	int	res;
-
-	res = parse_elem(m, line);
-	if (res == -1)
-		return (0);
-	if (res == 1)
-		return (1);
-	if (ft_strlen(line) > 0 && is_map_line(line))
-	{
-		if (!store_map_line(m, line, *i))
-			return (0);
-		(*i)++;
-	}
-	return (1);
-}
+int	is_empty_line(char *line);
 
 int	load_map_content(t_map *m, int fd)
 {
 	char	*line;
 	int		i;
+	int		map_started;
 
 	i = 0;
+	map_started = 0;
 	line = read_line(fd);
 	while (line)
 	{
-		if (!process_map_line(m, line, &i))
+		if (!map_started)
 		{
-			free(line);
-			return (0);
+			if (parse_elem(m, line) == 0 && m->element_count == 6
+				&& !is_empty_line(line))
+				map_started = 1;
+		}
+		if (map_started)
+		{
+			store_map_line(m, line, i);
+			i++;
 		}
 		free(line);
 		line = read_line(fd);

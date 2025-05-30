@@ -3,17 +3,16 @@
 NAME	= cub3D
 
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror -g3 # -fsanitize=address
 
 SRC_PATH		= src/
 OBJ_PATH		= objects/
 
-SRCS = main.c \
+SRCS = main.c init_game.c str_endswith.c \
 		error_utils.c \
-		free_utils.c \
 		keys.c \
-		raycasting.c \
-		render.c \
+		raycasting.c raycasting_p2.c \
+		render.c render_p2.c \
 		player.c \
 		map/border_checking.c  map/cell_validation.c  map/element_utils.c \
 		map/file_utils.c  map/map_loading.c  map/map_processing.c  map/map_utils.c  map/string_utils.c

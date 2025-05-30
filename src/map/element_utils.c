@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:29:13 by napham            #+#    #+#             */
-/*   Updated: 2025/05/29 20:45:34 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/31 00:15:40 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,15 @@ int	is_map_char(char c)
 	return (0);
 }
 
-int	is_map_line(char *line)
+int	is_empty_line(char *line)
 {
-	int	i;
-
-	i = 0;
-	while (line[i])
+	if (!line)
+		return (1);
+	while (*line)
 	{
-		if (!is_map_char(line[i]))
+		if (*line != ' ' && *line != '\t' && *line != '\n')
 			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	process_line(t_map *m, char *line, int *count)
-{
-	int	res;
-
-	res = parse_elem(m, line);
-	if (res == 1)
-		return (1);
-	if (ft_strlen(line) > 0 && is_map_line(line))
-	{
-		(*count)++;
-		return (1);
+		line++;
 	}
 	return (1);
 }
@@ -77,16 +61,21 @@ int	count_map_lines(int fd, t_map *m)
 {
 	char	*line;
 	int		count;
+	int		map_started;
 
 	count = 0;
 	line = read_line(fd);
+	map_started = 0;
 	while (line)
 	{
-		if (!process_line(m, line, &count))
+		if (!map_started)
 		{
-			free(line);
-			return (-1);
+			if (parse_elem(m, line) == 0 && m->element_count == 6
+				&& !is_empty_line(line))
+				map_started = 1;
 		}
+		if (map_started)
+			count++;
 		free(line);
 		line = read_line(fd);
 	}

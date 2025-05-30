@@ -6,7 +6,7 @@
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 01:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/29 20:36:48 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/31 00:29:19 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <math.h>
+# include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -36,7 +37,14 @@
 # define ERR_MLX_WIN "Could not create mlx window"
 # define ERR_MLX_IMG "Could not create mlx image"
 # define ERR_MLX_IMG_LOAD_FAIL "Could not load texture image"
-# define ERR_MAP_LOAD "Could not load map"
+# define ERR_MAP_FILE_OPEN "Could not open map file"
+# define ERR_MAP_MEMORY "Memory allocation error"
+# define ERR_MAP_FORMAT "Invalid map format"
+# define ERR_MAP_NOT_CLOSED "Map is not closed properly"
+# define ERR_MAP_MULTIPLE_PLAYERS "Multiple player positions found"
+# define ERR_MAP_MISSING_ELEMENTS "Missing required map elements"
+# define ERR_MAP_INVALID_CHAR "Invalid character in map"
+# define ERR_MAP_SMALL "Map is too small"
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -63,8 +71,6 @@ typedef struct s_textures
 	t_img			*south;
 	t_img			*west;
 	t_img			*east;
-	int				floor_color;
-	int				ceiling_color;
 }					t_textures;
 
 typedef struct s_player
