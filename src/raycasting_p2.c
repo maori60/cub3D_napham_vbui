@@ -58,10 +58,6 @@ static void	perform_dda(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (ray->map_y < 0.25 || ray->map_x < 0.25
-			|| ray->map_y > game->map->height - 0.25
-			|| ray->map_x > game->map->width - 1.25)
-			break ;
 		if (game->map->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}
@@ -70,11 +66,9 @@ static void	perform_dda(t_game *game, t_ray *ray)
 static void	calculate_wall_and_draw_props(t_game *game, t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - game->player.pos_x + (1
-					- ray->step_x) / 2) / ray->dir_x;
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - game->player.pos_y + (1
-					- ray->step_y) / 2) / ray->dir_y;
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 	ray->line_height = (int)(SCREEN_HEIGHT / ray->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
 	if (ray->draw_start < 0)

@@ -12,8 +12,8 @@
 
 #include "../includes/cub3d.h"
 
-void		cast_single_ray(t_game *game, t_ray *ray, int x);
-void		render_wall(t_game *game, t_ray *ray, int x);
+void	cast_single_ray(t_game *game, t_ray *ray, int x);
+void	render_wall(t_game *game, t_ray *ray, int x);
 
 void	cast_rays(t_game *game)
 {

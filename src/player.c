@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/22 22:43:25 by napham            #+#    #+#             */
-/*   Updated: 2025/05/30 22:42:49 by napham           ###   ########.fr       */
+/*   Created: 2025/05/22 22:43:25 by vbui              #+#    #+#             */
+/*   Updated: 2025/05/30 22:42:49 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	move_player(t_game *game)
 	if (game->keys.d)
 		strafe_left_right(game, 1.0);
 	if (game->keys.right)
-		rotate_player(game, -1.0);
-	if (game->keys.left)
 		rotate_player(game, 1.0);
+	if (game->keys.left)
+		rotate_player(game, -1.0);
 	if (game->keys.esc)
 		exit_game(game);
 }
