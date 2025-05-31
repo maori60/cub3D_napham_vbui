@@ -3,75 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 00:00:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/24 07:42:33 by napham           ###   ########.fr       */
+/*   Updated: 2025/05/31 00:36:40 by vbui             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	init_player(t_game *game)
+void	free_game(t_game *game);
+void	init_game(t_game *game);
+bool	str_endswith(const char *str, const char *suffix);
+
+int	init_mlx(t_game *game)
 {
-	game->player.plane_x = game->player.dir_y * 0.66;
-	game->player.plane_y = -game->player.dir_x * 0.66;
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		return (err_msg("mlx", ERR_MLX_WIN), free_game(game), 0);
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	if (!game->win)
+		return (err_msg("mlx", ERR_MLX_WIN), free_game(game), 0);
+	game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (!game->img)
+		return (err_msg("mlx", ERR_MLX_IMG), free_game(game), 0);
+	return (1);
 }
 
-void	*ft_memset(void *b, int c, size_t len)
+void	free_game(t_game *game)
 {
-	unsigned char	*p;
-
-	p = b;
-	while (len--)
-		*p++ = (unsigned char)c;
-	return (b);
-}
-
-/**
- * Initializes program data.
- */
-void	init_game(t_game *game)
-{
-	ft_memset(game, 0, sizeof(t_game));
-	game->player.move_speed = 0.005;
-	game->player.rot_speed = 0.003;
-}
-
-/**
- * Frees MLX and texture resources before exiting.
- */
-void	clean_exit(t_game *data, int exit_code)
-{
-	if (data->win)
-		mlx_destroy_window(data->mlx, data->win);
-	if (data->mlx)
+	if (game->img)
+		mlx_destroy_image(game->mlx, game->img);
+	if (game->textures.north)
+		mlx_destroy_image(game->mlx, game->textures.north);
+	if (game->textures.south)
+		mlx_destroy_image(game->mlx, game->textures.south);
+	if (game->textures.east)
+		mlx_destroy_image(game->mlx, game->textures.east);
+	if (game->textures.west)
+		mlx_destroy_image(game->mlx, game->textures.west);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
 	{
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
 	}
-	free_data(data);
-	exit(exit_code);
+	free_map(game->map);
+	free(game->map);
 }
 
-/**
- * Program entry point.
- */
+int	exit_game(t_game *game)
+{
+	free_game(game);
+	exit(0);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
 	if (argc != 2)
-		return (display_error_message(NULL, ERR_USAGE, FAILURE));
+		return (err_msg(NULL, ERR_USAGE), 1);
+	if (!str_endswith(argv[1], ".cub"))
+		return (err_msg(NULL, "Map file must have .cub extension"), 1);
+	ft_memset(&game, 0, sizeof(t_game));
+	game.map = load_map(argv[1]);
+	if (!game.map)
+		return (1);
+	if (!init_mlx(&game))
+		return (1);
 	init_game(&game);
-	init_mlx(&game);
-	if (load_map_file(argv[1], &game) == FAILURE)
-		clean_exit(&game, FAILURE);
-	validate_player_position(&game);
-	init_player(&game);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game);
-	//mlx_hook(game.win, 17, 0, clean_exit, &game);
+	mlx_hook(game.win, 17, 0, exit_game, &game);
 	mlx_loop_hook(game.mlx, render_frame, &game);
 	mlx_loop(game.mlx);
 }

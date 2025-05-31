@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_utils.c                                      :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbui <vbui@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/12 01:16:00 by vbui              #+#    #+#             */
-/*   Updated: 2025/05/29 20:22:39 by vbui             ###   ########.fr       */
+/*   Created: 2025/05/29 19:30:48 by napham            #+#    #+#             */
+/*   Updated: 2025/05/29 19:30:52 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-#include <stdio.h>
+#include "map.h"
 
-void	err_msg(char *context, char *message)
+void	free_map(t_map *m)
 {
-	printf("Error\n");
-	if (context)
-		printf("[%s] ", context);
-	printf("%s\n", message);
+	int	i;
+
+	i = 0;
+	while (m->map && i < m->height)
+		free(m->map[i++]);
+	free(m->map);
+	free(m->no_path);
+	free(m->so_path);
+	free(m->ea_path);
+	free(m->we_path);
 }
