@@ -45,6 +45,7 @@
 # define ERR_MAP_MISSING_ELEMENTS "Missing required map elements"
 # define ERR_MAP_INVALID_CHAR "Invalid character in map"
 # define ERR_MAP_SMALL "Map is too small"
+# define ERR_MAP_MISSING_PLAYER "No player position found in map"
 
 # define SUCCESS 0
 # define FAILURE 1
