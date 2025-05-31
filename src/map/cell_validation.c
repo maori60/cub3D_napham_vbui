@@ -77,8 +77,6 @@ int	validate_map(t_map *m)
 		return (0);
 	if (m->width < 3)
 		return (err_msg(NULL, ERR_MAP_SMALL), 0);
-	if (m->player_orientation == 0)
-		return (err_msg(NULL, ERR_MAP_MISSING_PLAYER), 0);
 	i = 0;
 	while (i < m->height)
 	{
@@ -86,6 +84,8 @@ int	validate_map(t_map *m)
 			return (0);
 		i++;
 	}
+	if (m->player_orientation == 0)
+		return (err_msg(NULL, ERR_MAP_MISSING_PLAYER), 0);
 	return (1);
 }
 

@@ -45,8 +45,8 @@ static void	init_player(t_game *game)
 	set_player_direction(&game->player, game->map->player_orientation);
 	game->player.plane_x = game->player.dir_y * -0.66;
 	game->player.plane_y = game->player.dir_x * 0.66;
-	game->player.move_speed = 0.005;
-	game->player.rot_speed = 0.003;
+	game->player.move_speed = 0.0125;
+	game->player.rot_speed = 0.015;
 }
 
 void	*ft_memset(void *b, int c, size_t len)

@@ -50,6 +50,10 @@
 # define SUCCESS 0
 # define FAILURE 1
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
 // From minilibx
 typedef struct s_img
 {

@@ -12,8 +12,8 @@
 
 #include "../includes/cub3d.h"
 
-void	put_pixel(t_img *img, int x, int y, int color);
-int		get_pixel_color(t_img *img, int x, int y);
+void			put_pixel(t_img *img, int x, int y, int color);
+int				get_pixel_color(t_img *img, int x, int y);
 
 static t_img	*get_wall_texture(t_game *game, t_ray *ray)
 {
@@ -73,6 +73,8 @@ void	render_wall(t_game *game, t_ray *ray, int x)
 {
 	t_img	*texture;
 
+	if (ray->draw_end < 0)
+		return ;
 	texture = get_wall_texture(game, ray);
 	draw_ceiling(game, x, ray->draw_start);
 	draw_wall_segment(game, ray, x, texture);

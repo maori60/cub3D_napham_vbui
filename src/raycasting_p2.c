@@ -58,6 +58,10 @@ static void	perform_dda(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
+		if (ray->map_y < 0.25 || ray->map_x < 0.25
+			|| ray->map_y > game->map->height - 0.25
+			|| ray->map_x > game->map->width - 1.25)
+			break ;
 		if (game->map->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}

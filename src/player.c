@@ -12,6 +12,8 @@
 
 #include "../includes/cub3d.h"
 
+void		validate_move(t_game *game, double new_x, double new_y);
+
 static void	move_forward_backward(t_game *game, double dir)
 {
 	double	new_x;
@@ -21,11 +23,7 @@ static void	move_forward_backward(t_game *game, double dir)
 		* dir;
 	new_y = game->player.pos_y + game->player.dir_y * game->player.move_speed
 		* dir;
-	if (game->map->map[(int)new_y][(int)new_x] != '1')
-	{
-		game->player.pos_x = new_x;
-		game->player.pos_y = new_y;
-	}
+	validate_move(game, new_x, new_y);
 }
 
 static void	strafe_left_right(t_game *game, double dir)
@@ -37,11 +35,7 @@ static void	strafe_left_right(t_game *game, double dir)
 		* dir;
 	new_y = game->player.pos_y + game->player.plane_y * game->player.move_speed
 		* dir;
-	if (game->map->map[(int)new_y][(int)new_x] != '1')
-	{
-		game->player.pos_x = new_x;
-		game->player.pos_y = new_y;
-	}
+	validate_move(game, new_x, new_y);
 }
 
 static void	rotate_player(t_game *game, double rot_dir)
