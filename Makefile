@@ -46,8 +46,9 @@ debug:
 
 minilibx-linux/libmlx.a:
 	rm -rf minilibx-linux && \
-	curl -OL https://cdn.intra.42.fr/document/document/31613/minilibx-linux.tgz && \
-	tar xf minilibx-linux.tgz && rm -rf minilibx-linux.tgz && \
+	curl -OL https://github.com/42paris/minilibx-linux/archive/7dc53a4.tar.gz && \
+	tar xf 7dc53a4.tar.gz && rm -rf 7dc53a4.tar.gz && \
+	mv minilibx-linux-* minilibx-linux && \
 	make -C minilibx-linux
 
 bonus:
