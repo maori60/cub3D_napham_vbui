@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils1.c                                    :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: napham <napham@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 19:31:22 by napham            #+#    #+#             */
-/*   Updated: 2025/05/29 19:31:31 by napham           ###   ########.fr       */
+/*   Updated: 2025/06/03 22:05:49 by napham           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,26 @@ char	*ft_strdup(char *s)
 
 int	ft_atoi(char *s)
 {
-	int	r;
-	int	i;
+	long	r;
+	int		i;
+	int		sign;
 
 	r = 0;
 	i = 0;
+	sign = 1;
+	if (s[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	if (!(s[i] >= '0' && s[i] <= '9'))
+		return (-1);
 	while (s[i] >= '0' && s[i] <= '9')
 	{
 		r = r * 10 + s[i] - '0';
 		i++;
 	}
-	return (r);
+	return (r * sign);
 }
 
 char	*alloc_line(int size)
